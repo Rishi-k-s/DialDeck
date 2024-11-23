@@ -11,8 +11,7 @@
 #define MODIFIER_ALT_LEFT   0x04
 
 // Change the below values if desired
-#define BUTTON_PIN 33
-#define MESSAGE "Rishi krishnaS\n"
+// #define MESSAGE "Rishi krishnaS\n"
 #define DEVICE_NAME "Dial Deck"
 
 // Define GPIO pins for rows (outputs) and columns (inputs)
@@ -77,15 +76,18 @@ void loop() {
 
     if (col0 == LOW) {
       Serial.println("1");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
+      typeText("v");
+      // sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
       delay(200);
     } else if (col1 == LOW) {
       Serial.println("2");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'c');
+      typeText("h");
+      // sendKeyCombination(MODIFIER_CTRL_LEFT, 'c');
       delay(200);
     } else if (col2 == LOW) {
       Serial.println("3");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'v');
+      typeText("c");
+      // sendKeyCombination(MODIFIER_CTRL_LEFT, 'v');
       delay(200);
     }
 
@@ -104,15 +106,17 @@ void loop() {
 
     if (col0 == LOW) {
       Serial.println("4");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'z');
+      typeText("f");
+      
       delay(200);
     } else if (col1 == LOW) {
       Serial.println("5");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'y');
+      typeText("t");
+      
       delay(200);
     } else if (col2 == LOW) {
       Serial.println("6");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 's');
+      //sendKeyCombination(MODIFIER_CTRL_LEFT, 's');
       delay(200);
     }
 
@@ -131,15 +135,15 @@ void loop() {
 
     if (col0 == LOW) {
       Serial.println("7");
-      sendAltTab();
+      sendKeyCombination(MODIFIER_CTRL_LEFT, 'z');
       delay(200);
     } else if (col1 == LOW) {
       Serial.println("8");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
+      sendKeyCombination(MODIFIER_CTRL_LEFT, 'y');
       delay(200);
     } else if (col2 == LOW) {
       Serial.println("9");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
+      sendAltTab();
       delay(200);
     }
 
@@ -158,15 +162,18 @@ void loop() {
 
     if (col0 == LOW) {
       Serial.println("*");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
+      //sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
+      typeText("l");
       delay(200);
     } else if (col1 == LOW) {
       Serial.println("0");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
+      typeText("r");
+      //sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
       delay(200);
     } else if (col2 == LOW) {
       Serial.println("#");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
+      typeText("p");
+      //sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
       delay(200);
     }
 
@@ -389,7 +396,7 @@ void sendKeyCombination(uint8_t modifier, char key) {
         KEYMAP map = keymap[val];
 
         InputReport report = {
-            .modifiers = modifier,  // Add provided modifier....
+            .modifiers = modifier,  // Add provided modifier
             .reserved = 0,
             .pressedKeys = {
                 map.usage,

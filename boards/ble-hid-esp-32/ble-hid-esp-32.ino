@@ -1,3 +1,29 @@
+/* 
+ * Sample program for ESP32 acting as a Bluetooth keyboard
+ * 
+ * Copyright (c) 2019 Manuel Bl
+ * 
+ * Licensed under MIT License
+ * https://opensource.org/licenses/MIT
+ */
+
+//
+// This program lets an ESP32 act as a keyboard connected via Bluetooth.
+// When a button attached to the ESP32 is pressed, it will generate the key strokes for a message.
+//
+// For the setup, a momentary button should be connected to pin 2 and to ground.
+// Pin 2 will be configured as an input with pull-up.
+//
+// In order to receive the message, add the ESP32 as a Bluetooth keyboard of your computer
+// or mobile phone:
+//
+// 1. Go to your computers/phones settings
+// 2. Ensure Bluetooth is turned on
+// 3. Scan for Bluetooth devices
+// 4. Connect to the device called "ESP32 Keyboard"
+// 5. Open an empty document in a text editor
+// 6. Press the button attached to the ESP32
+
 #define US_KEYBOARD 1
 
 #include <Arduino.h>
@@ -9,192 +35,49 @@
 #define MODIFIER_CTRL_LEFT  0x01
 #define MODIFIER_SHIFT_LEFT 0x02
 #define MODIFIER_ALT_LEFT   0x04
+#define MODIFIER_NONE 0x00
+
 
 // Change the below values if desired
 #define BUTTON_PIN 33
 #define MESSAGE "Rishi krishnaS\n"
-#define DEVICE_NAME "Dial Deck"
+#define DEVICE_NAME "ESP32 Keyboard"
 
-// Define GPIO pins for rows (outputs) and columns (inputs)
-int R0 = 12;  // Row 0
-int R1 = 14;  // Row 1
-int R2 = 27;  // Row 2
-int R3 = 26;  // Row 3
-int R4 = 25;  // Row 4
-
-int C0 = 33;  // Column 0
-int C1 = 32;  // Column 1
-int C2 = 35;  // Column 2
-int C3 = 34;  // Column 3
-int C4 = 39;  // Column 4
-
-// Variables to store column states
-int col0, col1, col2, col3, col4;
 
 // Forward declarations
 void bluetoothTask(void*);
 void typeText(const char* text);
+void sendMediaKey(uint8_t mediaKey);
+
 
 bool isBleConnected = false;
 
+int R0 = 12;  // Row 0
 
 void setup() {
-  // Configure row pins as outputs
-  pinMode(R0, OUTPUT);
-  pinMode(R1, OUTPUT);
-  pinMode(R2, OUTPUT);
-  pinMode(R3, OUTPUT);
-  pinMode(R4, OUTPUT);
+    Serial.begin(115200);
+    pinMode(R0, OUTPUT);
 
-  // Configure column pins as inputs with pull-up resistors
-  pinMode(C0, INPUT_PULLUP);
-  pinMode(C1, INPUT_PULLUP);
-  pinMode(C2, INPUT_PULLUP);
-  pinMode(C3, INPUT_PULLUP);
-  pinMode(C4, INPUT_PULLUP);
+    // configure pin for button
+    pinMode(BUTTON_PIN, INPUT_PULLUP);
 
-  // Initialize serial communication
-  Serial.begin(115200);
-
-  // start Bluetooth task
+    // start Bluetooth task
     xTaskCreate(bluetoothTask, "bluetooth", 20000, NULL, 5, NULL);
 }
 
-void loop() {
-  if (isBleConnected) {
-    // Scan Row 0
-    digitalWrite(R0, LOW);
-    digitalWrite(R1, HIGH);
-    digitalWrite(R2, HIGH);
-    digitalWrite(R3, HIGH);
-    digitalWrite(R4, HIGH);
 
-    col0 = digitalRead(C0);
-    col1 = digitalRead(C1);
-    col2 = digitalRead(C2);
-    col3 = digitalRead(C3);
-    col4 = digitalRead(C4);
-
-    if (col0 == LOW) {
-      Serial.println("1");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
-      delay(200);
-    } else if (col1 == LOW) {
-      Serial.println("2");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'c');
-      delay(200);
-    } else if (col2 == LOW) {
-      Serial.println("3");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'v');
-      delay(200);
+void loop() {  
+    if (isBleConnected && digitalRead(BUTTON_PIN) == LOW) {
+        // button has been pressed: type message
+        Serial.println(MESSAGE);
+        // typeText(MESSAGE);
+        sendMediaKey(0xE9);
+        //sendKeyCombination(MODIFIER_CTRL_LEFT, 'A');
     }
 
-    // Scan Row 1
-    digitalWrite(R0, HIGH);
-    digitalWrite(R1, LOW);
-    digitalWrite(R2, HIGH);
-    digitalWrite(R3, HIGH);
-    digitalWrite(R4, HIGH);
-
-    col0 = digitalRead(C0);
-    col1 = digitalRead(C1);
-    col2 = digitalRead(C2);
-    col3 = digitalRead(C3);
-    col4 = digitalRead(C4);
-
-    if (col0 == LOW) {
-      Serial.println("4");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'z');
-      delay(200);
-    } else if (col1 == LOW) {
-      Serial.println("5");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'y');
-      delay(200);
-    } else if (col2 == LOW) {
-      Serial.println("6");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 's');
-      delay(200);
-    }
-
-    // Scan Row 2
-    digitalWrite(R0, HIGH);
-    digitalWrite(R1, HIGH);
-    digitalWrite(R2, LOW);
-    digitalWrite(R3, HIGH);
-    digitalWrite(R4, HIGH);
-
-    col0 = digitalRead(C0);
-    col1 = digitalRead(C1);
-    col2 = digitalRead(C2);
-    col3 = digitalRead(C3);
-    col4 = digitalRead(C4);
-
-    if (col0 == LOW) {
-      Serial.println("7");
-      sendAltTab();
-      delay(200);
-    } else if (col1 == LOW) {
-      Serial.println("8");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
-      delay(200);
-    } else if (col2 == LOW) {
-      Serial.println("9");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
-      delay(200);
-    }
-
-    // Scan Row 3
-    digitalWrite(R0, HIGH);
-    digitalWrite(R1, HIGH);
-    digitalWrite(R2, HIGH);
-    digitalWrite(R3, LOW);
-    digitalWrite(R4, HIGH);
-
-    col0 = digitalRead(C0);
-    col1 = digitalRead(C1);
-    col2 = digitalRead(C2);
-    col3 = digitalRead(C3);
-    col4 = digitalRead(C4);
-
-    if (col0 == LOW) {
-      Serial.println("*");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
-      delay(200);
-    } else if (col1 == LOW) {
-      Serial.println("0");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
-      delay(200);
-    } else if (col2 == LOW) {
-      Serial.println("#");
-      sendKeyCombination(MODIFIER_CTRL_LEFT, 'a');
-      delay(200);
-    }
-
-    // Scan Row 4
-    digitalWrite(R0, HIGH);
-    digitalWrite(R1, HIGH);
-    digitalWrite(R2, HIGH);
-    digitalWrite(R3, HIGH);
-    digitalWrite(R4, LOW);
-
-    col0 = digitalRead(C0);
-    col1 = digitalRead(C1);
-    col2 = digitalRead(C2);
-    col3 = digitalRead(C3);
-    col4 = digitalRead(C4);
-
-    if (col0 == LOW) {
-      Serial.println("I");
-      delay(200);
-    } else if (col1 == LOW) {
-      Serial.println("J");
-      delay(200);
-    } else if (col2 == LOW) {
-      Serial.println("K");
-      delay(200);
-    }
-  }
+    delay(100);
 }
+
 
 // Message (report) sent when a key is pressed or released
 struct InputReport {
@@ -245,7 +128,20 @@ static const uint8_t REPORT_MAP[] = {
     REPORT_COUNT(1),    0x01,       //   3 bits (Padding)
     REPORT_SIZE(1),     0x03,
     HIDOUTPUT(1),       0x01,       //   Const, Array, Abs
-    END_COLLECTION(0)               // End application collection
+    END_COLLECTION(0),               // End application collection
+    0x05, 0x0C,       // Usage Page (Consumer Devices)
+    0x09, 0x01,       // Usage (Consumer Control)
+    0xA1, 0x01,       // Collection (Application)
+    0x85, 0x02,       //   Report ID (2)
+    0x15, 0x00,       //   Logical Minimum (0)
+    0x26, 0xFF, 0x03, //   Logical Maximum (1023)
+    0x19, 0x00,       //   Usage Minimum (0)
+    0x2A, 0xFF, 0x03, //   Usage Maximum (1023)
+    0x75, 0x10,       //   Report Size (16 bits)
+    0x95, 0x01,       //   Report Count (1)
+    0x81, 0x00,       //   Input (Data, Array, Absolute)
+    0xC0              // End Collection
+
 };
 
 
@@ -294,7 +190,7 @@ class BleKeyboardCallbacks : public BLEServerCallbacks {
  class OutputCallbacks : public BLECharacteristicCallbacks {
     void onWrite(BLECharacteristic* characteristic) {
         OutputReport* report = (OutputReport*) characteristic->getData();
-        //Serial.print("LED state: ");
+        Serial.print("LED state: ");
         Serial.print((int) report->leds);
         Serial.println();
     }
@@ -389,7 +285,7 @@ void sendKeyCombination(uint8_t modifier, char key) {
         KEYMAP map = keymap[val];
 
         InputReport report = {
-            .modifiers = modifier,  // Add provided modifier....
+            .modifiers = modifier,  // Add provided modifier
             .reserved = 0,
             .pressedKeys = {
                 map.usage,
@@ -411,26 +307,18 @@ void sendKeyCombination(uint8_t modifier, char key) {
     }
 }
 
-void sendAltTab() {
+void sendMediaKey(uint8_t mediaKey) {
+    Serial.print("Sending Media Key: ");
     if (isBleConnected) {
-        // Alt key press
-        InputReport altPress = {
-            .modifiers = MODIFIER_ALT_LEFT,
-            .reserved = 0,
-            .pressedKeys = {
-                0x2B,  // Tab key usage
-                0, 0, 0, 0, 0
-            }
-        };
-
-        // Send Alt+Tab
-        input->setValue((uint8_t*)&altPress, sizeof(altPress));
+        uint8_t buffer[2] = {mediaKey, 0};  // Media key report
+        input->setValue(buffer, sizeof(buffer));
         input->notify();
 
-        delay(50);
+        delay(5);
 
-        // Release keys
-        input->setValue((uint8_t*)&NO_KEY_PRESSED, sizeof(NO_KEY_PRESSED));
+        // Release media key
+        buffer[0] = 0;
+        input->setValue(buffer, sizeof(buffer));
         input->notify();
     }
 }

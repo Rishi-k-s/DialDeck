@@ -13,7 +13,7 @@
 // Change the below values if desired
 #define BUTTON_PIN 33
 #define MESSAGE "Rishi krishnaS\n"
-#define DEVICE_NAME "Dial Deck"
+#define DEVICE_NAME "ESP32 Keyboard"
 
 // Define GPIO pins for rows (outputs) and columns (inputs)
 int R0 = 12;  // Row 0
@@ -389,7 +389,7 @@ void sendKeyCombination(uint8_t modifier, char key) {
         KEYMAP map = keymap[val];
 
         InputReport report = {
-            .modifiers = modifier,  // Add provided modifier....
+            .modifiers = modifier,  // Add provided modifier
             .reserved = 0,
             .pressedKeys = {
                 map.usage,
