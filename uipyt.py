@@ -372,7 +372,7 @@ class LetterNumberUI(QMainWindow):
             return
             
         self.current_number = number
-        self.current_letter = letter
+        self.current_lette r = letter
         self.update_preview()
 
         if self.serial_connection and self.serial_connection.is_open:
