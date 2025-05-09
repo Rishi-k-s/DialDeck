@@ -6,10 +6,6 @@
 
 ![DialDeck](landlinePcb.jpg)
 
-## GitHub Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=Rishi-k-s/DialDeck&type=Date)](https://www.star-history.com/#Rishi-k-s/DialDeck&Date)
-
 
 ## **Features**
 
