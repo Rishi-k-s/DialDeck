@@ -6,6 +6,8 @@
 
 ![DialDeck](landlinePcb.jpg)
 
+<iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://www.star-history.com/embed?secret=Z2l0aHViX3BhdF8xMUFOTTNYTEEwRjhhVmFvVm5UbUFZX0gyYjRXTVhLTGRkbG40RHBHdlQyd0hRT0JGT0JTNzBkeG90OVZlbklQb0JISUROWlpXU1JuaDdGSDRW#Rishi-k-s/DialDeck&Date" frameBorder="0"></iframe>
+
 ## **Features**
 
 - **Customizable Buttons**: Each landline button can be programmed for unique functions—switch scenes, mute your mic, or trigger sound effects with a click!  
@@ -49,6 +51,8 @@ This project is licensed under the MIT License—use it freely, modify it, share
 ## **Support & Feedback**
 
 Got a question or hit a snag? Don’t hesitate to open an issue on GitHub or reach out via [email](mailto:rishikrishna.sr@gmail.com). We’re here to help!
+
+
 
 ## **Shoutouts**
 
