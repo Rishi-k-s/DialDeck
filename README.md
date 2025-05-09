@@ -6,7 +6,10 @@
 
 ![DialDeck](landlinePcb.jpg)
 
-<iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://www.star-history.com/embed?secret=Z2l0aHViX3BhdF8xMUFOTTNYTEEwRjhhVmFvVm5UbUFZX0gyYjRXTVhLTGRkbG40RHBHdlQyd0hRT0JGT0JTNzBkeG90OVZlbklQb0JISUROWlpXU1JuaDdGSDRW#Rishi-k-s/DialDeck&Date" frameBorder="0"></iframe>
+## GitHub Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Rishi-k-s/DialDeck&type=Date)](https://www.star-history.com/#Rishi-k-s/DialDeck&Date)
+
 
 ## **Features**
 
