@@ -13,7 +13,7 @@
 ## **Features**
 
 - **Customizable Buttons**: Each landline button can be programmed for unique functions—switch scenes, mute your mic, or trigger sound effects with a click!  
-- **Effortless Setup**: Minimal wiring and a straightforward Arduino Nano configuration make it beginner-friendly.  
+- **Effortless Setup**: Minimal wiring and a straightforward ESP 32 configuration make it beginner-friendly.  
 - **Open-Source & Hackable**: Dive into the code and hardware—add, tweak, or modify as you wish!  
 
 ## **What You'll Need**
