@@ -2,7 +2,7 @@
 # **Dialഡെക്ക്**  
 ## Repurposing the Past for the Future!  
 
-**Dialഡെക്ക്** transforms your nostalgic BSNL landline into a cutting-edge stream deck, powered by an Arduino Nano. With this project, you'll breathe new life into old technology, turning it into a customizable control hub for streamers and content creators. Why let that landline gather dust when it can be the centerpiece of your next creative setup?
+**Dialഡെക്ക്** transforms your nostalgic BSNL landline into a cutting-edge stream deck, powered by an ESP 32. With this project, you'll breathe new life into old technology, turning it into a customizable control hub for streamers and content creators. Why let that landline gather dust when it can be the centerpiece of your next creative setup?
 
 ![DialDeck](landlinePcb.jpg)
 
