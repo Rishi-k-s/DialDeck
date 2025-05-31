@@ -27,7 +27,7 @@
 ## **How to Build Your Dialഡെക്ക്**
 
 1. **Disassemble the Landline**: Crack open the retro case and find those button connections that we’re going to hack into!  
-2. **Wiring to Arduino**: Carefully connect the buttons to the Arduino Nano with jumper wires (pin-by-pin instructions in the guide).  
+2. **Wiring to ESP 32**: Carefully connect the buttons to the ESP 32 with jumper wires (pin-by-pin instructions in the guide).  
 3. **Upload the Code**: Upload the pre-made or custom Arduino code that maps each button to specific stream functions.  
 4. **Test, Tweak, Triumph!**: Run your setup through a few tests—make sure each button is smooth and functional.
 
