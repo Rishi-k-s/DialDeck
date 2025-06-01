@@ -56,6 +56,3 @@ Got a question or hit a snag? Don’t hesitate to open an issue on GitHub or rea
 
 
 
-## **Shoutouts**
-
-Huge thanks to the open-source community and all contributors who inspire and support projects like this. Let's keep hacking and creating!
