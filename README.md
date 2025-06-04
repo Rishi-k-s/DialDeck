@@ -52,7 +52,7 @@ This project is licensed under the MIT License—use it freely, modify it, share
 
 ## **Support & Feedback**
 
-Got a question or hit a snag? Don’t hesitate to open an issue on GitHub or reach out via [email](mailto:rishikrishna.sr@gmail.com). We’re here to help!
+Got a question or hit a snag? Don’t hesitate to open an issue on GitHub or reach out via [email](mailto:rishikrishna.sr@gmail.com). We’re here to help!!
 
 
 
