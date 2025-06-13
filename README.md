@@ -18,7 +18,7 @@
 
 ## **What You'll Need**
 
-- Arduino Nano  
+- ESP 32  
 - Old BSNL Landline  
 - USB Cable  
 - Jumper Wires  
